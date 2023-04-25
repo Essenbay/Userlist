@@ -33,7 +33,7 @@ class SimpleAuthProvider implements AuthProvider {
       _userList = list.map((model) => User.fromJson(model)).toList();
       return _userList;
     } else {
-      throw DataLoadError();
+      throw Error();
     }
   }
 

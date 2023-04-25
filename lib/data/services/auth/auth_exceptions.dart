@@ -2,19 +2,12 @@
 class UserNotFoundException implements Exception {
   @override
   String toString() {
-    return "User not found";
+    return "Пользователь не найден";
   }
 }
 class WrongEmailOrPasswordAuthException implements Exception {
   @override
   String toString() {
-    return "Wrong email or password";
-  }
-}
-
-class DataLoadError implements Exception {
-  @override
-  String toString() {
-    return "Не удалось загрузить информацию";
+    return "Неправильная почта или пароль";
   }
 }

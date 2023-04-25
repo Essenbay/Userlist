@@ -65,9 +65,9 @@ class _UserListViewState extends State<UserListView> {
                           height: 80,
                         ),
                         const SizedBox(height: 20),
-                        Text(
-                          snapshot.error.toString(),
-                          style: const TextStyle(
+                        const Text(
+                          "Не удалось загрузить информацию",
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
