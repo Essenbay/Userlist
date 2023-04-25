@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qazaqsoft_test/data/model/user.dart';
 import 'package:logging/logging.dart';
+import 'package:qazaqsoft_test/data/services/auth/auth_service.dart';
 import 'package:qazaqsoft_test/utils/colors.dart';
 
-import '../../data/services/users/UsersRepository.dart';
 
 //TODO: centralize header when list is focused.
 class UserListView extends StatefulWidget {
@@ -16,23 +16,11 @@ class UserListView extends StatefulWidget {
 class _UserListViewState extends State<UserListView> {
   List<User> userList = <User>[];
   final logger = Logger('MyLogger');
-  final UserRepository userRepository = UserRepository();
 
-  void getUsers() async {
-    try {
-      List<User> userList = await userRepository.fetchUsers();
-      setState(() {
-        this.userList = userList;
-      });
-    } catch (e) {
-      logger.info('Error fetching users: $e');
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    getUsers();
   }
 
   @override
@@ -59,7 +47,7 @@ class _UserListViewState extends State<UserListView> {
             ),
           ),
           FutureBuilder<List<User>>(
-            future: userRepository.fetchUsers(),
+            future: AuthService.simple().getUsers(),
             builder:
                 (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {

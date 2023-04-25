@@ -1,45 +1,23 @@
-import 'package:flutter/cupertino.dart';
-import 'package:qazaqsoft_test/data/services/auth/auth_exceptions.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../users/UsersRepository.dart';
+import 'package:qazaqsoft_test/data/model/user.dart';
+import 'package:qazaqsoft_test/data/services/auth/simple_auth_provider.dart';
 
-class AuthProvider with ChangeNotifier {
-  final UserRepository userRepository = UserRepository();
+import 'auth_provider.dart';
 
-  bool _isLoggedIn = false;
+class AuthService implements AuthProvider {
+  final AuthProvider provider;
 
-  bool get isLoggedIn => _isLoggedIn;
+  AuthService(this.provider);
 
-  Future<void> login(String email, String password) async {
-    _checkCredentials(email, password);
+  factory AuthService.simple() => AuthService(SimpleAuthProvider());
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', email);
-    await prefs.setString('password', password);
-    _isLoggedIn = true;
-    notifyListeners();
-  }
+  @override
+  User? get currentUser => provider.currentUser;
 
-  Future<void> _checkCredentials(String email, String password) async {
-    if (email.isEmpty && password.isEmpty) throw WrongEmailOrPasswordAuthException();
-    await userRepository.getUserByEmail(email);
-  }
+  @override
+  Future<void> login({required String email, required String password}) =>
+      provider.login(email: email, password: password);
 
-  Future<void> logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('email');
-    await prefs.remove('password');
-    _isLoggedIn = false;
-    notifyListeners();
-  }
+  @override
+  Future<List<User>> getUsers() => provider.getUsers();
 
-  Future<void> checkLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString('email');
-    String? password = prefs.getString('password');
-    if (email != null && password != null) {
-      _isLoggedIn = true;
-    }
-    notifyListeners();
-  }
 }

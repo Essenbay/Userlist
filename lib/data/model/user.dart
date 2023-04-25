@@ -4,6 +4,8 @@ class User {
   String email;
   String phone;
 
+  User(this.id, this.username, this.email, this.phone);
+
   User.fromJson(Map json)
       : id = json['id'],
         username = json['username'],
