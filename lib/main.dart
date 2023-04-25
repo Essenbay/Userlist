@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qazaqsoft_test/ui/views/user_list_page.dart';
+import 'package:qazaqsoft_test/ui/views/login/login_view.dart';
 import 'package:qazaqsoft_test/utils/colors.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Users App',
       theme: ThemeData(
           primarySwatch: Colors.purple, primaryColor: AppColors.primary),
-      home: UserListPage(),
+      home: LoginView(),
     );
   }
 }

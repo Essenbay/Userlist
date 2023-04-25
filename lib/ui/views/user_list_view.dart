@@ -6,14 +6,14 @@ import 'package:qazaqsoft_test/utils/colors.dart';
 import '../../data/services/users/UsersRepository.dart';
 
 //TODO: centralize header when list is focused.
-class UserListPage extends StatefulWidget {
-  UserListPage({Key key = const ValueKey('user_list')}) : super(key: key);
+class UserListView extends StatefulWidget {
+  UserListView({Key key = const ValueKey('user_list')}) : super(key: key);
 
   @override
-  _UserListPageState createState() => _UserListPageState();
+  _UserListViewState createState() => _UserListViewState();
 }
 
-class _UserListPageState extends State<UserListPage> {
+class _UserListViewState extends State<UserListView> {
   List<User> userList = <User>[];
   final logger = Logger('MyLogger');
   final UserRepository userRepository = UserRepository();

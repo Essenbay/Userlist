@@ -20,18 +20,12 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-// if login is successful, set _isLoggedIn to true
-// and save the user's login credentials using shared_preferences
-
   Future<void> _checkCredentials(String email, String password) async {
     if (email.isEmpty && password.isEmpty) throw WrongEmailOrPasswordAuthException();
     await userRepository.getUserByEmail(email);
   }
 
   Future<void> logout() async {
-    // perform logout logic here
-    // set _isLoggedIn to false
-    // and remove the user's login credentials from shared_preferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('email');
     await prefs.remove('password');
@@ -40,12 +34,10 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> checkLoginStatus() async {
-    // check if the user is logged in by retrieving the user's login credentials from shared_preferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString('email');
     String? password = prefs.getString('password');
     if (email != null && password != null) {
-      // if the user's login credentials exist, set _isLoggedIn to true
       _isLoggedIn = true;
     }
     notifyListeners();

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserRepository {
+  final _httpSource = "https://jsonplaceholder.typicode.com/users";
   static final UserRepository _instance = UserRepository._internal();
   List<User> _userList = [];
 
@@ -21,14 +22,10 @@ class UserRepository {
 
   Future<List<User>> fetchUsers() async {
     if (_userList.isNotEmpty) {
-      // Return cached data if available
       return _userList;
     }
-    Future.delayed(const Duration(seconds: 120), () { // <-- Delay here
-
-    });
     final response =
-        await http.get(Uri.parse("https://jsonplaceholder.typicode.com/users"));
+        await http.get(Uri.parse(_httpSource));
 
     if (response.statusCode == 200) {
       Iterable list = json.decode(response.body);
